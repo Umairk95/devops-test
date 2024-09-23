@@ -5,26 +5,44 @@
 
 This is a technical test for the role of **DevOps Engineer**.
 
-## Objectives
+## Diagram
 
-This test helps us to understand
-- how do you approach infrastructure design
-- how do you manage microservices communication
-- how do you consider security implications
+![Cloud Infrastructure Diagram](devops.png)
 
-## Project Setup
+## Create AKS Cluster
+  
+  1. Change dir to Teraform Script.
+  2. Update variable
+  3. RUN Terraform script to create ACR and AKS Custer
 
-Project root has [`index.js`](/index.js) file. It simulates a simple app that runs infinitely & sends metrics to a [`statsd`](https://github.com/statsd/statsd) server.
 
-## Exercices
+## Run Graphite
+  
+  1. Change dir to Graphite.
+  2. Deploy graphite.yaml and graphite_service.yaml on AKS with image ([Graphite Image](graphiteapp/graphite-statsd)). 
+  3. Graphte port which needs to be expose 2023, 2024.
 
-  1. Add a `Dockerfile` to containerize the app, with support for multiple environments (DEV, UAT & Production)
-  2. Design the cloud infrastructure diagram (prefer AWS) with all the resources that are required for the application(Node app, `statsd` & the backend. Applicants can use any backends for `statsd` eg: `Graphite`). Use ECS or EKS as application platform.
-  3. Utilize Terraform to establish infrastructure that adheres to industry-standard security and high availability (HA) practices.
-  4. (Optional) Deploy on the cloud computing platforms
 
-## Submitting Your Code
+## Run Statsd
+  
+  1. git clone stasd repo. ([Statsd Repo](https://github.com/statsd/statsd))
+  2. Change dir to statsd
+  3. Replace line 24 with [sed -i 's/graphite.example.com/<graphite-service>/' config.js]
+  3. Run command docker build -t <Repo_name>:<tag>   # Service name or ip of service
+  4. Docker push image to ACR. 
+  5. Change dir to Statsd and deploy statsd.yaml and statsd_service.yaml on AKS. # update image name in statsd.yaml
 
-Email us your Github repo and grant he access to `lycbrian` We expect meaningful git commits, ideally one commit per exercise with commit messages clearly communicating the intent.
 
-If you deploy it to any cloud platforms, please send us instructions & relevant IAM user credentials.
+## Container Node App
+
+  1. Run command docker build -t <Repo_name>:<tag> --build-arg METRICS_HOST= <statsd-service> # Service name or ip of service
+  2. Docker push image to ACR.
+  5. Change dir to Node_app and deploy node_app.yaml on AKS. # update image name in node_app.yaml
+
+
+## Summary
+Node app will send metics to statsd on port 8125/udp, statsd will store that metrics and send to Graphite backend on port 2023 for visualization.
+
+
+## Note
+We can implement different  stratigies to deploy these micro services but in this scenario  we are just deploying these micro services to run.

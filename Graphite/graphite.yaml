@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: graphite
+  labels:
+    app: graphite
+spec:
+  replicas: 1 # Number of desired pods
+  selector:
+    matchLabels:
+      app: graphite
+  template:
+    metadata:
+      labels:
+        app: graphite
+    spec:
+      containers:
+        - name: graphite
+          image: graphiteapp/graphite-statsd:latest # Replace with your preferred Graphite image
+          ports:
+            - containerPort: 80  # Web interface
+            - containerPort: 2003 # Carbon protocol
+            - containerPort: 8125 # StatsD UDP
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
