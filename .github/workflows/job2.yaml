@@ -1,0 +1,12 @@
+name: job 2
+
+on: [push, pull_request]
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Run Job 1
+        run: echo "Running Job 1"
