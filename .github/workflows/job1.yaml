@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Wait
+      - name: Wait 
         run: sleep 60
       - name: Run Job 1  
         run: echo "Running Job 1"
