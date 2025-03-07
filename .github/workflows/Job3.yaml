@@ -1,0 +1,17 @@
+name: Queue Workflows Example 22
+
+on: [push, pull_request]
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: workflow-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Wait
+        run: sleep 60
+      - name: Run Job 1
+        run: echo "Running Job 1"
