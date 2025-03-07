@@ -12,7 +12,7 @@ function sleep(ms) {
 async function main() {
   // send message to the metrics server
   metrics.timing('test.core.delay', Math.random() * 1000);
-
+ 
   // sleep for a random number of milliseconds to avoid flooding metrics server
   return sleep(3000);
 }
