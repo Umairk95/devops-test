@@ -1,6 +1,9 @@
 name: Queue Workflows Example
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   job1:
