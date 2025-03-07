@@ -25,5 +25,5 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Run Job 2
-        run: echo "Running Job 2 "
+        run: echo "Running Job 2"
 
