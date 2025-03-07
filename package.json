@@ -9,6 +9,6 @@
   "author": "",
   "license": "UNLICENSED",
   "dependencies": {
-    "lynx": "^0.2.0"
+    "lynx": "^0.2.0" 
   }
 }
