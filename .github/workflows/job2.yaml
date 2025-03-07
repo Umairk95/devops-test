@@ -1,4 +1,4 @@
-name: job 2
+name: Job  Dependency
 
 on: [push, pull_request]
 
