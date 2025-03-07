@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Copy code to /app dir
-COPY index.js1 ./
+COPY index.js ./
 
 # Argument for environment.
 ARG METRICS_HOST=localhost
