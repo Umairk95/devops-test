@@ -1,14 +1,14 @@
-name: Job  Dependency
+name: Second Workflow
+
 on:
-  push:
-    branches:
-      - job2
+  workflow_run:
+    workflows: ["First Workflow"]  # This references the name of the first workflow
+    types:
+      - completed  # Runs after the first workflow completes (success or failure)
 
 jobs:
-  job1:
+  follow_up:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Run Job 1
-        run: echo "Running Job 1"
+      - name: Run follow-up job
+        run: echo "Running this job no matter what!"
