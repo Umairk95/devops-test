@@ -1,29 +1,20 @@
-name: Queue Workflows Example
+name: First Workflow
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
-  job1:
+  build:
     runs-on: ubuntu-latest
-    concurrency:
-      group: main
-      cancel-in-progress: true
-    steps: 
-      - name: Checkout code
-        uses: actions/checkout@v2 
-      - name: Wait 
-        run: sleep 60
-      - name: Run Job 1  
-        run: echo "Running Job 1"
-  job2:
-    runs-on: ubuntu-latest
-    needs: job1
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Run Job 2
-        run: echo "Running Job 2 "
+        uses: actions/checkout@v3
 
+      - name: Simulate a successful step
+        run: echo "This step succeeds"
+
+      - name: Simulate a failure
+        run: exit 1  # This step fails, but the second workflow should still run
+
+      - name: This step won't run
+        run: echo "This won't run because the previous step failed"
